@@ -92,8 +92,8 @@ jobs:
             then
               aws cloudfront create-invalidation --distibution-id ${ASW_STAGING_DISTRIBUTION_ID} --paths /\*
             elif [ "${CIRCLE_BRANCH}" == "develop" ]
-              aws cloudfront create-invalidation --distibution-id ${ASW_DEV_DISTRIBUTION_ID} --paths /\*
             then
+              aws cloudfront create-invalidation --distibution-id ${ASW_DEV_DISTRIBUTION_ID} --paths /\*
             fi
 workflows:
   build_and_deploy:
