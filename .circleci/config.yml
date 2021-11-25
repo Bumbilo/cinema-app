@@ -1,5 +1,4 @@
 version: 2.1
-
 jobs:
   build:
     docker:
@@ -21,7 +20,6 @@ jobs:
           paths:
             - node_modules
           key: app-{{ checksum "package.json" }}
-
   deploy-aws-s3:
     docker:
       - image: circleci/node:12.19.0
@@ -49,16 +47,15 @@ jobs:
       - run:
           name: Deploy to AWS S3
           command: |
-            if ["${CIRCLE_BRANCH}" == "master"]
+            if [ "${CIRCLE_BRANCH}" == "master" ]
             then
               aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_PROD_BUCKET} --delete
-            elif ["${CIRCLE_BRANCH}" == "staging"]
+            elif [ "${CIRCLE_BRANCH}" == "staging" ]
             then
               aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_STAGING_BUCKET} --delete
-            elif ["${CIRCLE_BRANCH}" == "develop"]
+            elif [ "${CIRCLE_BRANCH}" == "develop" ]
               aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_DEV_BUCKET} --delete
             fi
-
   deploy-cloud-front:
     docker:
       - image: circleci/node:12.19.0
@@ -87,16 +84,15 @@ jobs:
           name: Deploy to AWS Cloud front
           command: |
             aws configure set preview.cloudfront true
-            if ["${CIRCLE_BRANCH}" == "master"]
+            if [ "${CIRCLE_BRANCH}" == "master" ]
             then
               aws cloudfront create-invalidation --distibution-id ${ASW_PROD_DISTRIBUTION_ID} --paths /\*
-            elif ["${CIRCLE_BRANCH}" == "staging"]
+            elif [ "${CIRCLE_BRANCH}" == "staging" ]
             then
               aws cloudfront create-invalidation --distibution-id ${ASW_STAGING_DISTRIBUTION_ID} --paths /\*
-            elif ["${CIRCLE_BRANCH}" == "develop"]
+            elif [ "${CIRCLE_BRANCH}" == "develop" ]
               aws cloudfront create-invalidation --distibution-id ${ASW_DEV_DISTRIBUTION_ID} --paths /\*
             fi
-
 workflows:
   build_and_deploy:
     jobs:
