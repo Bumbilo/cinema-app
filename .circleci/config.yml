@@ -10,7 +10,6 @@ executors:
     docker:
       - image: 'cimg/base:stable'
     resource_class: small
-
 aliases:
   - &current-branch-name
     run:
