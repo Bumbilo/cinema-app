@@ -8,8 +8,9 @@ executors:
     working_directory: ~/repo
   slack-executor:
     docker:
-      - image: 'cimg/base:stable'
+      - image:  'cibuilds/base:latest'
     resource_class: small
+
 aliases:
   - &current-branch-name
     run:
@@ -120,7 +121,7 @@ jobs:
       - run: echo "Slack norification"
       - slack/notify:
           event: 'always'
-          channel: 'CircleCI-Cinema'
+          channel: 'cinema-circleci'
           template: ''
           custom: |
             {
