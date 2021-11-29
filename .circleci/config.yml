@@ -146,7 +146,7 @@ jobs:
                     },
                     {
                       "type": "markdown",
-                      "text": "*When*:\n$(date + '%m/%d/%Y %T')"
+                      "text": "*When*:\n$(date +'%d/%m/%Y')"
                     },
                     {
                       "type": "markdown",
