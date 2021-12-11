@@ -89,7 +89,7 @@ const Slider = ({ images, auto, showArrows }) => {
           )}
         </div>
         <Indicators currentSlide={slideIndex} />
-        { showArrows ? <RenderArrows /> : null}
+        {showArrows ? <RenderArrows /> : null}
       </div>
     </>
   );
