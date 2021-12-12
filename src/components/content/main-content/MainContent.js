@@ -1,19 +1,51 @@
 import React, { useState } from 'react';
 import Slider from '../slider/Slider';
 import Paginate from '../../pagenate/Paginate';
+import Grid from '../grid/Grid';
 
 import './MainContent.scss';
 
 const MainContent = () => {
   const images = [
     {
-      url: 'https://www.shaadidukaan.com/vogue/wp-content/uploads/2019/08/hug-kiss-images.jpg'
+      url: 'https://www.shaadidukaan.com/vogue/wp-content/uploads/2019/08/hug-kiss-images.jpg',
+      rating: 7.5
     },
     {
-      url: 'https://test.ua/img/projects/testnp.png'
+      url: 'https://test.ua/img/projects/testnp.png',
+      rating: 3.5
     },
     {
-      url: 'https://www.shaadidukaan.com/vogue/wp-content/uploads/2019/08/hug-kiss-images.jpg'
+      url: 'https://www.shaadidukaan.com/vogue/wp-content/uploads/2019/08/hug-kiss-images.jpg',
+      rating: 8.5
+    },
+    {
+      url: 'https://test.ua/img/projects/testnp.png',
+      rating: 6.5
+    },
+    {
+      url: 'https://www.shaadidukaan.com/vogue/wp-content/uploads/2019/08/hug-kiss-images.jpg',
+      rating: 7.5
+    },
+    {
+      url: 'https://test.ua/img/projects/testnp.png',
+      rating: 8.0
+    },
+    {
+      url: 'https://www.shaadidukaan.com/vogue/wp-content/uploads/2019/08/hug-kiss-images.jpg',
+      rating: 7.0
+    },
+    {
+      url: 'https://test.ua/img/projects/testnp.png',
+      rating: 7.5
+    },
+    {
+      url: 'https://www.shaadidukaan.com/vogue/wp-content/uploads/2019/08/hug-kiss-images.jpg',
+      rating: 7.5
+    },
+    {
+      url: 'https://test.ua/img/projects/testnp.png',
+      rating: 6.2
     }
   ];
 
@@ -36,7 +68,7 @@ const MainContent = () => {
           <Paginate currentPage={currentPage} totalPages={10} paginate={paginate} />
         </div>
       </div>
-      {/* display Grid components */}
+      <Grid images={images} />
     </div>
   );
 };
