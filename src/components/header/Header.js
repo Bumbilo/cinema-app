@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './Header.scss';
 import logo from '../../assets/logo.png';
 import { connect } from 'react-redux';
-import { getMovies, setMovieType, setResponsePageNumber } from '../../redux/actions/movies';
+import { getMovies, setMovieType, setResponsePageNumber, searchQuery, searchResult } from '../../redux/actions/movies';
 
 const HEADER_LIST = [
   {
@@ -33,10 +33,11 @@ const HEADER_LIST = [
 ];
 
 const Header = (props) => {
-  const { getMovies, setMovieType, page, totalPages, setResponsePageNumber } = props;
+  const { getMovies, setMovieType, page, totalPages, setResponsePageNumber, searchQuery, searchResult } = props;
   const [navClass, setNavClass] = useState(false);
   const [menuClass, setMenuClass] = useState(false);
   const [type, setType] = useState(HEADER_LIST[0].type);
+  const [search, setSearch] = useState('');
 
   const toggleMenu = () => {
     setNavClass(!navClass);
@@ -47,6 +48,12 @@ const Header = (props) => {
   const setMovieTypeUrl = (type) => {
     setType(type);
     setMovieType(type);
+  };
+
+  const onChangeSearch = (event) => {
+    setSearch(event.target.value);
+    searchQuery(event.target.value);
+    searchResult(event.target.value);
   };
 
   useEffect(() => {
@@ -84,7 +91,13 @@ const Header = (props) => {
                 <span className="header-list-name">{header.name}</span>
               </li>
             ))}
-            <input className="search-input" type="text" placeholder="Search for a movie" />
+            <input
+              className="search-input"
+              type="text"
+              placeholder="Search for a movie"
+              value={search}
+              onChange={onChangeSearch}
+            />
           </ul>
         </div>
       </div>
@@ -98,7 +111,9 @@ Header.propTypes = {
   setResponsePageNumber: PropTypes.func,
   // list: PropTypes.array,
   page: PropTypes.number,
-  totalPages: PropTypes.number
+  totalPages: PropTypes.number,
+  searchQuery: PropTypes.func,
+  searchResult: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -106,4 +121,6 @@ const mapStateToProps = (state) => ({
   page: state.movies.page,
   totalPages: state.movies.totalPages
 });
-export default connect(mapStateToProps, { getMovies, setMovieType, setResponsePageNumber })(Header);
+export default connect(mapStateToProps, { getMovies, setMovieType, setResponsePageNumber, searchQuery, searchResult })(
+  Header
+);
