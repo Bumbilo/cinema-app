@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { IMAGE_URL } from '../../../services/move.service';
 
 import './Slider.scss';
 
 const Slider = ({ images, auto, showArrows }) => {
-  const [state, setState] = useState({
-    slideShow: images[0],
-    slideIndex: 0
-  });
+  const [state, setState] = useState({ slideShow: images[0], slideIndex: 0 });
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [sliderInterval, setSliderInterval] = useState(0);
@@ -85,7 +83,10 @@ const Slider = ({ images, auto, showArrows }) => {
       <div className="slider">
         <div className="slider-slides">
           {images && images.length && slideShow && (
-            <div className="slider-image" style={{ backgroundImage: `url(${slideShow.url})` }}></div>
+            <div
+              className="slider-image"
+              style={{ backgroundImage: `url(${IMAGE_URL}/${slideShow.poster_path})` }}
+            ></div>
           )}
         </div>
         <Indicators currentSlide={slideIndex} />

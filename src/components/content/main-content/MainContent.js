@@ -1,76 +1,66 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Slider from '../slider/Slider';
 import Paginate from '../../pagenate/Paginate';
 import Grid from '../grid/Grid';
+import { getMovies, setResponsePageNumber } from '../../../redux/actions/movies';
 
 import './MainContent.scss';
 
-const MainContent = () => {
-  const images = [
-    {
-      url: 'https://www.shaadidukaan.com/vogue/wp-content/uploads/2019/08/hug-kiss-images.jpg',
-      rating: 7.5
-    },
-    {
-      url: 'https://test.ua/img/projects/testnp.png',
-      rating: 3.5
-    },
-    {
-      url: 'https://www.shaadidukaan.com/vogue/wp-content/uploads/2019/08/hug-kiss-images.jpg',
-      rating: 8.5
-    },
-    {
-      url: 'https://test.ua/img/projects/testnp.png',
-      rating: 6.5
-    },
-    {
-      url: 'https://www.shaadidukaan.com/vogue/wp-content/uploads/2019/08/hug-kiss-images.jpg',
-      rating: 7.5
-    },
-    {
-      url: 'https://test.ua/img/projects/testnp.png',
-      rating: 8.0
-    },
-    {
-      url: 'https://www.shaadidukaan.com/vogue/wp-content/uploads/2019/08/hug-kiss-images.jpg',
-      rating: 7.0
-    },
-    {
-      url: 'https://test.ua/img/projects/testnp.png',
-      rating: 7.5
-    },
-    {
-      url: 'https://www.shaadidukaan.com/vogue/wp-content/uploads/2019/08/hug-kiss-images.jpg',
-      rating: 7.5
-    },
-    {
-      url: 'https://test.ua/img/projects/testnp.png',
-      rating: 6.2
-    }
-  ];
-
+const MainContent = ({ list, movieType, totalPages, page, getMovies, setResponsePageNumber }) => {
+  useEffect(() => {
+    setCurrentPage(page);
+  }, [page, totalPages]);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const HEADER_TYPE = {
+    now_playing: 'Now Playing',
+    popular: 'Popular',
+    top_rated: 'Top Rated',
+    upcoming: 'Upcoming'
+  };
+
   const paginate = (type) => {
+    let pageNumber = currentPage;
     if (type === 'prev' && currentPage >= 1) {
-      setCurrentPage((prev) => prev - 1);
+      pageNumber -= 1;
     } else {
-      setCurrentPage((prev) => prev + 1);
+      pageNumber += 1;
     }
+
+    setCurrentPage(pageNumber);
+    setResponsePageNumber(pageNumber, totalPages);
+    getMovies(movieType, pageNumber);
   };
 
   return (
     <div className="main-content">
-      <Slider images={images} auto={true} showArrows={true} />
+      <Slider images={list} auto={true} showArrows={true} />
       <div className="grid-movie-title">
-        <div className="movieType">Now Playing</div>
+        <div className="movieType">{HEADER_TYPE[movieType]}</div>
         <div className="paginate">
-          <Paginate currentPage={currentPage} totalPages={10} paginate={paginate} />
+          <Paginate currentPage={currentPage} totalPages={totalPages} paginate={paginate} />
         </div>
       </div>
-      <Grid images={images} />
+      <Grid images={list} />
     </div>
   );
 };
 
-export default MainContent;
+const mapStateToProps = (state) => ({
+  list: state.movies.list,
+  movieType: state.movies.movieType,
+  totalPages: state.movies.totalPages,
+  page: state.movies.page
+});
+export default connect(mapStateToProps, { getMovies, setResponsePageNumber })(MainContent);
+
+MainContent.propTypes = {
+  list: PropTypes.array.isRequired,
+  movieType: PropTypes.string,
+  totalPages: PropTypes.number,
+  page: PropTypes.number,
+  getMovies: PropTypes.func,
+  setResponsePageNumber: PropTypes.func
+};
