@@ -85,7 +85,7 @@ const Slider = ({ images, auto, showArrows }) => {
           {images && images.length && slideShow && (
             <div
               className="slider-image"
-              style={{ backgroundImage: `url(${IMAGE_URL}/${slideShow.poster_path})` }}
+              style={{ backgroundImage: `url(${IMAGE_URL}${slideShow.poster_path})` }}
             ></div>
           )}
         </div>
