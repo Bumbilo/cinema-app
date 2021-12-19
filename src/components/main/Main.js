@@ -39,8 +39,6 @@ function Main(props) {
       pageNumber += 1;
       setCurrentPage(pageNumber);
       loadMoreMovies(movieType, pageNumber);
-    } else {
-      // loadMoreMovies('now_playing', currentPage);
     }
   };
 
