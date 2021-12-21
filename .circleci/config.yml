@@ -11,7 +11,7 @@ executors:
       - image: 'cimg/base:stable'
     resource_class: small
   docker-publisher:
-    enviroment:
+    environment:
       IMAGE_NAME: bumbilo/cinema-app
     docker:
       - image: circleci/buildpack-deps:stretch
