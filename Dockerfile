@@ -1,5 +1,7 @@
 FROM node:13-alpine
 WORKDIR /app
+ARG REACT_APP_API_SECRET
+ENV REACT_APP_API_SECRET=$REACT_APP_API_SECRET
 COPY . /app
 RUN npm install
 RUN npm run build
