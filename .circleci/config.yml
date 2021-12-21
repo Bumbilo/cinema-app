@@ -100,13 +100,12 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]
             then
-              docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:production-${CIRCLE_BUILD_NUM"} && docker push ${IMAGE_NAME}:production-${CIRCLE_BUILD_NUM"}
+              docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:stable-${CIRCLE_BUILD_NUM} && docker push ${IMAGE_NAME}:stable-${CIRCLE_BUILD_NUM}
             elif [ "${CIRCLE_BRANCH}" == "staging" ]
             then
-              docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:staging-${CIRCLE_BUILD_NUM"} && docker push ${IMAGE_NAME}:staging-${CIRCLE_BUILD_NUM"}
-            elif [ "${CIRCLE_BRANCH}" == "develop" ]
-            then
-              docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:develop-${CIRCLE_BUILD_NUM"} && docker push ${IMAGE_NAME}:develop-${CIRCLE_BUILD_NUM"}
+              docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:staging-${CIRCLE_BUILD_NUM} && docker push ${IMAGE_NAME}:staging-${CIRCLE_BUILD_NUM}
+            else
+              docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:dev-${CIRCLE_BUILD_NUM} && docker push ${IMAGE_NAME}:dev-${CIRCLE_BUILD_NUM}
             fi
   deploy-aws-s3:
     executor: app-executor
